@@ -100,6 +100,16 @@ var panel=Ext.create('Ext.panel.Panel', {
     renderTo: Ext.getBody()
 });
 
+var inp = Ext.create('Ext.form.TextField', {
+    fieldLabel: 'Ваше имя:',
+    allowBlank:false,
+    emptyText: 'введите текст', //подсказка в текстовом поле
+    minLength: 3,
+    maxLength: 6,
+    maskRe:/[1-9]/i,
+    name: 'name'
+});
+
  Ext.application({
     name: 'HelloExt',
     launch: function() {
@@ -111,7 +121,7 @@ var panel=Ext.create('Ext.panel.Panel', {
             defaults: {
                 labelWidth: 100
             },
-            items: [grid, btn, panel],
+            items: [grid, btn, panel, inp],
             renderTo: Ext.getBody()
         });
     }
