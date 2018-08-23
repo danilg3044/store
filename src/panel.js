@@ -73,7 +73,8 @@ var btn = Ext.create('Ext.Button', {
     margin: '50 0 0 50',
     renderTo: Ext.getBody(),
     handler: function() {
-        var tran = '<table><tr><td>11</td><td>12</td></tr><tr><td>21</td><td>22</td></tr></table>';
+        var tran = '<table style="width: 100%"><tr><td style="width: 50%"><table cellpadding="10"><tr><td>11</td><td>aa</td></tr><tr><td>22222</td><td>bb</td></tr><tr><td>33</td><td>cc</td></tr></table></td>' +
+        '<td style="width: 50%"><table cellpadding="16"><tr><td>aa</td><td>11</td></tr><tr><td>bb</td><td>22</td></tr><tr><td>ccccc</td><td>33</td></tr></table></td></tr></table>';
         panel.update(tran);
     }
 });
@@ -94,6 +95,7 @@ var panel=Ext.create('Ext.panel.Panel', {
     height: 150,
     padding:10,
     bodyPadding:5,
+    autoScroll:true,
     bodyStyle:{"background-color":"red"}, 
     renderTo: Ext.getBody()
 });
