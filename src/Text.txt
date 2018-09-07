@@ -1,0 +1,51 @@
+static IntSupplier generator() {
+        Random rnd = new Random();
+        return () -> Counter.value++ >= 20 ? 0 : rnd.nextInt(9) + 1;
+    }
+    
+    IntStream.generate(generator()).parallel().anyMatch(i -> {if(i != 0) System.out.println(i); return i == 0;});
+    System.out.println("   " + Counter.value);
+    
+    https://msdn.microsoft.com/en-us/library/ms532847(v=vs.85).aspx
+    
+    
+    
+    
+<!--meta http-equiv="Page-Enter" content="progid:DXImageTransform.Microsoft.Fade(duration=0.5, overlap=0.5)"/> 
+<meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=0.5,overlap=0.5)"/-->
+
+document.oncontextmenu = function(){return false}
+function SetLight(img) {img.filters[0].addAmbient(255, 255, 255, 100)}
+
+
+function VerifyCallback(result)
+{
+    progress.endElement()
+}
+
+function Verify()
+{    
+    progress.beginElement()
+}
+
+
+function Finish()
+{
+    WaitLabel.innerHTML = "שמירת טביעות אצבע בבסיס נתונים"
+    progress.beginElement()
+}
+
+
+<img id="rHand" src="Images/Hand.gif" style="position:absolute; left:expression(lHand.width + lHand.style.posLeft);
+				top:expression(lHand.style.posTop); filter:progid:DXImageTransform.Microsoft.Light()
+				progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)" onload="SetLight(this)"/>
+
+
+<div class="body"><br /><label id="WaitLabel"></label><br /><br />
+<div id="progress" begin="999999" style="height: 22px; width: 256px; behavior: url(#default#time2); color: #00AA66;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#008833, endColorstr=#00CC99)"></div>
+<br /><br /></div>
+
+<Comda:TRANSITIONFILTER accelerate="0.33" decelerate="0.66" TYPE="barWipe" BEGIN="progress.begin" END="progress.end" REPEATCOUNT="indefinite" DUR="2" TARGETELEMENT="progress"/>
+<Comda:TRANSITIONFILTER accelerate="0.33" decelerate="0.66" TYPE="fade" BEGIN="progress.begin" END="progress.end" REPEATCOUNT="indefinite" DUR="2" TARGETELEMENT="progress"/>
+              
