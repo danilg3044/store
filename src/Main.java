@@ -1,6 +1,7 @@
 package daniel;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -38,7 +39,7 @@ public class Main {
     private final String password = "rdsppassword";
     
     Connection connection;
-    ThreadLocal<Connection> threadConnection = new ThreadLocal<>();
+    ThreadLocal<WeakReference<Connection>> threadConnection = new ThreadLocal<>();
     List<Connection> connections = Collections.synchronizedList(new ArrayList<>());
     
 	public Connection connect() throws SQLException {
@@ -69,18 +70,25 @@ public class Main {
 	
 	public Account getAccount(long number) {
         String SQL = "SELECT * FROM account WHERE account_number=" + number;
-
-        Connection cnct = threadConnection.get();
-        if(cnct == null) {
-        	try {
-        		cnct = connect();
-				threadConnection.set(cnct);
-				connections.add(cnct);
-			} catch (SQLException e) {
-			}
-        }
+        Connection conn = null;
+        WeakReference<Connection> wr = threadConnection.get();
         
-        try(Statement stmt = cnct.createStatement(); ResultSet rs = stmt.executeQuery(SQL)) {
+        try {
+			if(wr == null || wr.get() == null || wr.get().isClosed()) {
+				conn = connect();
+				connections.add(conn);
+				wr = new WeakReference<Connection>(conn);
+				threadConnection.set(wr);	
+			}
+			else {
+				conn = wr.get();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        try(Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(SQL)) {
             rs.next();
             number = rs.getLong(1);
     	}
@@ -93,18 +101,25 @@ public class Main {
 	
 	public Long getAccount2(Long number) {
         String SQL = "SELECT * FROM account WHERE account_number=" + number;
-
-        Connection cnct = threadConnection.get();
-        if(cnct == null) {
-        	try {
-        		cnct = connect();
-				threadConnection.set(cnct);
-				connections.add(cnct);
-			} catch (SQLException e) {
-			}
-        }
+        Connection conn = null;
+        WeakReference<Connection> wr = threadConnection.get();
         
-        try(Statement stmt = cnct.createStatement(); ResultSet rs = stmt.executeQuery(SQL)) {
+        try {
+			if(wr == null || wr.get() == null || wr.get().isClosed()) {
+				conn = connect();
+				connections.add(conn);
+				wr = new WeakReference<Connection>(conn);
+				threadConnection.set(wr);	
+			}
+			else {
+				conn =  wr.get();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        try(Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(SQL)) {
             rs.next();
             number = rs.getLong(1);
     	}
@@ -162,6 +177,7 @@ public class Main {
 			catch (SQLException e) {
 			}
 		});
+		connections.clear();
 		
        	loadAccounts(2);
        	connections.forEach(cnct -> {
@@ -171,6 +187,7 @@ public class Main {
 			catch (SQLException e) {
 			}
 		});
+		connections.clear();
        	
     	loadAccounts(4);
     	connections.forEach(cnct -> {
@@ -180,6 +197,7 @@ public class Main {
 			catch (SQLException e) {
 			}
 		});
+		connections.clear();
     	
     	loadAccounts(8);
     	connections.forEach(cnct -> {
@@ -189,6 +207,7 @@ public class Main {
 			catch (SQLException e) {
 			}
 		});
+		connections.clear();
 	}
 	
 	public static void main(String[] args) {
