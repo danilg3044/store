@@ -2,7 +2,7 @@ npm install angular2-toaster
 npm install --save @angular/material @angular/cdk
 npm install rxjs
 npm install rxjs-compat
-
+npm install @angular-devkit/build-angular
 
 static IntSupplier generator() {
         Random rnd = new Random();
