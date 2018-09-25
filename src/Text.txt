@@ -1,3 +1,9 @@
+npm install angular2-toaster
+npm install --save @angular/material @angular/cdk
+npm install rxjs
+npm install rxjs-compat
+
+
 static IntSupplier generator() {
         Random rnd = new Random();
         return () -> Counter.value++ >= 20 ? 0 : rnd.nextInt(9) + 1;
@@ -31,7 +37,7 @@ function Verify()
 
 function Finish()
 {
-    WaitLabel.innerHTML = "שמירת טביעות אצבע בבסיס נתונים"
+    WaitLabel.innerHTML = "×©×ž×™×¨×ª ×˜×‘×™×¢×•×ª ×�×¦×‘×¢ ×‘×‘×¡×™×¡ × ×ª×•× ×™×�"
     progress.beginElement()
 }
 
