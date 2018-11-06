@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Objects</title>
+  <script type="text/javascript">
+    function MyObject(n, a) {
+        // private fields
+        var name = n;
+        var age = a;
+
+        // public fields
+        this.bio = n + ": " + age;
+
+        this.getName = function getName() {
+            return name;
+        }
+
+        // private method
+        function _getAge() {
+            return age;
+        }
+
+        this.getAge = function getAge() {
+            return _getAge();
+        }
+    }
+
+    function useObject() {
+        var obj = new MyObject('Daniel', 30);    
+        console.log(obj.getName());
+        console.log(obj.getAge());
+    }
+
+    function usePrototypes() {
+        var obj = new MyObject('Daniel', 30);
+        MyObject.prototype.getDetails = function() {
+            return this.bio;
+        }
+
+        console.log(obj.getDetails());
+    }
+
+    function useThis() {
+        var user = {
+            name: "usr1",
+            getName : function() {
+                console.log(this.name);
+            }
+        };
+        
+        user.getName();
+    }
+
+    function getProps() {
+        var obj = new MyObject('Daniel', 30);
+        var keys =  Object.keys(obj);
+        for(var i in keys) {
+            var key = keys[i];
+            console.log(key + ": " +obj[key]);
+        }
+    }
+  </script>
+</head>
+<body>
+    <input type="button" onclick="useObject()" value="use object"><br>
+    <input type="button" onclick="usePrototypes()" value="use prototypes"><br>
+    <input type="button" onclick="useThis()" value="use 'this'">
+    <input type="button" onclick="getProps()" value="properties">
+</body></html>
